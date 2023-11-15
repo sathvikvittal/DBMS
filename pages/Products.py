@@ -3,7 +3,7 @@ import mysql.connector
 import pandas as pd
 from PIL import Image
 from sqlconfig import connect
-# image = Image.open('sunrise1.jpg')
+import time
 import os
 con = connect()
 cursor = con.cursor()
@@ -78,6 +78,28 @@ def p2():
     st.write(f':red[Average Rating:] {avg_rat}')
     df.drop(['rid','pid'],axis=1,inplace=True)
     st.table(df)
+
+    qty = int(st.number_input("Enter Purchase Quantity",step = 1))
+    add = st.button("Add to Cart",type='primary')
+    if add and 'user' in st.session_state:
+        if(qty <= 0):
+            st.error("Qty Cannot be 0 or negative")
+        else:
+            try:
+                cursor.execute(f'insert into shopping_cart values("{st.session_state.user}","{st.session_state.product[0]}","{qty}")')
+            except mysql.connector.errors.IntegrityError:
+                st.error("Product Already in cart")
+            else:
+                con.commit()
+                st.success("Product Added to Cart")
+                time.sleep(1)
+                st.session_state.page=1
+            
+    elif add:
+        st.error("Please Login to Access Cart")
+
+
+
 def main():
     if 'page' not in st.session_state or st.session_state.page == 1:
         p1()

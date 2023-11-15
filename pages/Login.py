@@ -7,7 +7,7 @@ from streamlit_extras.switch_page_button import switch_page
 con = connect()
 cursor = con.cursor()
 st.header(':red[Login]')
-
+st.session_state.page=1
 option = st.selectbox(
     'Login as Seller/User?',
     ( 'User','Seller'))
@@ -28,7 +28,8 @@ with st.form('login',clear_on_submit=True):
                 st.success('Logged In Successfully')
                 time.sleep(1.5)
                 st.session_state.admin = 'True'
-                switch_page('MainPage')
+                st.session_state.user = username
+                switch_page('Products')
             else:
                 st.error("Invalid Username/Password")
         else:
@@ -43,13 +44,13 @@ with st.form('login',clear_on_submit=True):
             if(actual_passwd == passwd):
                 st.success('Logged In Successfully')
                 time.sleep(1.5)
-                switch_page('MainPage')
+                st.session_state.user = username
+
+                switch_page('Products')
             else:
                 st.error("Invalid Username/Password")
         else:
             st.error("Invalid Username/Password")
-
-
 
 
         
