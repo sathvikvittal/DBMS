@@ -67,4 +67,16 @@ if 'user' in st.session_state and 'admin' in st.session_state and st.session_sta
             conn.commit()
             time.sleep(2)
             st.rerun()
+
+elif 'user' not in st.session_state:
+    st.write("Please login")
+    time.sleep(3)
+    switch_page("Login")
+
+else:
+    st.write("You are not a seller")
+    st.write("Please use a seller account or register seller account")
+    time.sleep(5)
+    switch_page("Login")
+
             
