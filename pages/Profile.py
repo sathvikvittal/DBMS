@@ -28,25 +28,25 @@ else:
     query = cursor.fetchone()
     choice = st.selectbox("Pick one", ["Edit Password", "Edit User details"])
     if choice == "Edit User details":
-        st.text_area("Your username : ",placeholder=query[0],disabled=True)
+        st.text_input("Your username : ",placeholder=query[0],disabled=True)
 
-        first_name = st.text_area("Your First Name : ",placeholder=query[1])
-        middle_name = st.text_area("Your Middle Name : ",placeholder=query[2])
-        last_name = st.text_area("Your First Name : ",placeholder=query[3])
-        st.text_area("Your emailId : ",placeholder=query[5],disabled=True)
+        first_name = st.text_input("Your First Name : ",placeholder=query[1])
+        middle_name = st.text_input("Your Middle Name : ",placeholder=query[2])
+        last_name = st.text_input("Your First Name : ",placeholder=query[3])
+        st.text_input("Your emailId : ",placeholder=query[5],disabled=True)
         if type1 == "USER":
             phone_number = st.number_input("Your Phone Number : ",placeholder=query[6])
-            adr = st.text_area("Your Address : ",placeholder=query[7])
+            adr = st.text_input("Your Address : ",placeholder=query[7])
         else:
-            shop_name = st.text_area("Your Shop Name : ",placeholder=query[6])
+            shop_name = st.text_input("Your Shop Name : ",placeholder=query[6])
     
     else:
-        pass1 =  st.text_area("Enter Old Password ",type='password')
-        pass2 =  st.text_area("Enter New Password ",type='password')
+        pass1 =  st.text_input("Enter Old Password ",type='password')
+        pass2 =  st.text_input("Enter New Password ",type='password')
         if len(pass2)<8:
             st.session_state.dis = True
             st.warning("Please enter atleast 8 characters in password")
-        pass3 =  st.text_area("Re-enter New Password ",type='password')
+        pass3 =  st.text_input("Re-enter New Password ",type='password')
 
         if pass3 != pass2:
             st.session_state.dis = True
