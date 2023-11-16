@@ -89,3 +89,24 @@ INSERT INTO REVIEW VALUES
 ('R2','P1','USER_3','1','Not fitting through Door'),
 ('R3','P3','USER_2','4','Good Quality Headphones'),
 ('R4','P2','USER_2','1','My ironbox is cooler than this');
+
+DROP FUNCTION FETCH_ALL IF EXISTS;
+DELIMITER //
+CREATE FUNCTION FETCH_ALL
+(
+    ID VARCHAR(50),
+    TAB_NAME VARCHAR(50)
+)
+RETURNS TABLE
+AS
+    IF TAB_NAME == "SELLER" THEN
+            RETURN (
+                SELECT * FROM SELLER WHERE SELLER_ID = ID
+            )
+    ELSE
+            RETURN (
+                SELECT * FROM USER WHERE USER_ID = ID
+            )
+    END IF;
+END//
+DELIMITER ;
