@@ -7,9 +7,9 @@ if 'user' in st.session_state:
     user = st.session_state.user
     con = connect()
     cursor = con.cursor()
-    cursor.execute(f'select * from (select * from orders where user_id = "{user}") T')
+    cursor.execute(f'select Order_ID, Product_ID, User_ID, ADDR, Payment_Mode, Qty, Product_name from (select o.Order_ID, o.Product_ID, o.User_ID, o.ADDR, o.Payment_Mode, o.Qty, p.Product_name from orders o join product p USING(PRODUCT_ID) where o.user_id = "{user}") T')
     orders = cursor.fetchall()
-    df = pd.DataFrame(orders,columns=['Order_ID','Product_ID','User_ID','Address','Mode Of Payment','Quantity'])
+    df = pd.DataFrame(orders,columns=['Order_ID','Product_ID','User_ID','Address','Mode Of Payment','Quantity','Product_Name'])
     df.drop(["User_ID"],axis=1,inplace=True)
     st.write(df)
 

@@ -28,7 +28,7 @@ else:
     query = cursor.fetchone()
     choice = st.selectbox("Pick one", ["Edit Password", "Edit User details"])
     if choice == "Edit User details":
-        st.text_input("Your username : ",placeholder=query[0],disabled=True)
+        st.text_input("Your username : ",value=query[0],disabled=True)
 
         first_name = st.text_input("Your First Name : ",value=query[1])
         middle_name = st.text_input("Your Middle Name : ",value=query[2])
