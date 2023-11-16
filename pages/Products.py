@@ -71,7 +71,7 @@ def p2():
     st.write(f':red[Available Qty]: {st.session_state.product[3]}')
     st.write(':red[Details:]')
     st.write(f':white[{st.session_state.product[5]}]')
-    cursor.execute(f'Select * from review where product_id = "{st.session_state.product[0]}"')
+    cursor.execute(f'Select * from (Select * from review where product_id = "{st.session_state.product[0]}")')
     reviews = cursor.fetchall()
     df = pd.DataFrame(reviews , columns=['rid','pid','buyer','rating','comment'])
     avg_rat = df['rating'].mean()

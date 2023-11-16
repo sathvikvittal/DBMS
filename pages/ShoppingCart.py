@@ -61,17 +61,13 @@ if 'user' in st.session_state:
         payment_mode = st.selectbox("Select Payment Mode",('Cash on Delivery','UPI','Credit/Debit Card'))
 
         if st.button('Confirm',type='primary'):
-            orderid = uuid.uuid4().hex[:20].upper()
+            orderid = str(uuid.uuid4().hex[:20].upper())
             cursor.execute(f'select addr from user where user_id = "{user}"')
             addr = cursor.fetchall()[0][0]
-            try:
-                for i in selection['Product_id'].values:
-                    qty = selection[selection['Product_id']==i]['Qty'].values[0]
-                    cursor.execute(f'Insert into orders values("{orderid}","{i}","{user}","{addr}","{payment_mode}","{qty}")')
-                    con.commit()
-            except:
-                print("Error")
-    
-    
+            for i in selection['Product_id'].values:
+                qty = selection[selection['Product_id']==i]['Qty'].values[0]
+                cursor.execute(f'Insert into orders values("{orderid}","{i}","{user}","{addr}","{payment_mode}","{qty}");')
+                con.commit()
+
 else:
     st.write("Please Login to View Your Shopping Cart")
