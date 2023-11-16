@@ -71,10 +71,16 @@ def p2():
     st.write(f':red[Available Qty]: {st.session_state.product[3]}')
     st.write(':red[Details:]')
     st.write(f':white[{st.session_state.product[5]}]')
-    cursor.execute(f'Select * from (Select * from review where product_id = "{st.session_state.product[0]}")')
+    cursor.execute(f'Select * from (Select * from review where product_id = "{st.session_state.product[0]}") T')
     reviews = cursor.fetchall()
     df = pd.DataFrame(reviews , columns=['rid','pid','buyer','rating','comment'])
-    avg_rat = df['rating'].mean()
+    cursor.execute(f"Select AVG(Rating) from Review Group by product_id having product_id = '{st.session_state.product[0]}'")
+    res = cursor.fetchall()
+    avg_rat = 0
+    if len(res)>0:
+        avg_rat = float(res[0][0])
+        round(avg_rat,2)
+
     st.write(f':red[Average Rating:] {avg_rat}')
     df.drop(['rid','pid'],axis=1,inplace=True)
     st.table(df)
