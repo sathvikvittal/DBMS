@@ -4,6 +4,8 @@ import pandas as pd
 import uuid
 
 st.session_state.page=1
+if 'conf' not in st.session_state:
+    st.session_state.conf = False
 
 if 'user' in st.session_state:
     user = st.session_state.user
@@ -30,7 +32,7 @@ if 'user' in st.session_state:
         selected_rows = edited_df[edited_df.Select]
         return selected_rows.drop('Select', axis=1)
 
-
+    
     selection = dataframe_with_selections(df)
     st.write("Your selection:")
     st.write(selection)
@@ -42,8 +44,13 @@ if 'user' in st.session_state:
             con.commit()
         st.rerun()
     
-    buy = st.button("Buy Selected",type='primary')
-    if buy:
+    def clicked():
+        st.session_state.conf = True
+
+    st.button("Buy Selected",type='primary',on_click=clicked)
+
+
+    if st.session_state.conf:
         total = 0
         qty = selection['Qty'].values
         ppu = selection['Price per Unit'].values
@@ -64,6 +71,7 @@ if 'user' in st.session_state:
                     con.commit()
             except:
                 print("Error")
-
+    
+    
 else:
     st.write("Please Login to View Your Shopping Cart")
