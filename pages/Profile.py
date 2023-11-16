@@ -52,7 +52,7 @@ else:
             st.session_state.dis = True
             st.warning("Password does not match")
 
-    submitted = st.button("Register",disabled=st.session_state.dis)
+    submitted = st.button("Update",disabled=st.session_state.dis)
 
     if submitted:
         if choice == 'Edit Password':
@@ -64,17 +64,17 @@ else:
         else:
             if type1 == "SELLER":
                 cursor.execute(f"""
-                    UPDATE {type1} SET FIRST_NAME = '{first_name}',MIDDLE_NAME = '{middle_name}',
-                    LAST_NAME = '{last_name}',SHOP_NAME = '{shop_name}' WHERE {type1}_ID = '{st.session_state.user}' 
+                    UPDATE {type1} SET FIRSTNAME = '{first_name}',MIDDLENAME = '{middle_name}',
+                    LASTNAME = '{last_name}',SHOP_NAME = '{shop_name}' WHERE {type1}_ID = '{st.session_state.user}' 
                 """)
                 
             else:
                 cursor.execute(f"""
-                    UPDATE {type1} SET FIRST_NAME = '{first_name}',MIDDLE_NAME = '{middle_name}',
-                    LAST_NAME = '{last_name}',ADDR = '{adr}',PHONENO = {phone_number} WHERE {type1}_ID = '{st.session_state.user}' 
+                    UPDATE {type1} SET FIRSTNAME = '{first_name}',MIDDLENAME = '{middle_name}',
+                    LASTNAME = '{last_name}',ADDR = '{adr}',PHONENO = {phone_number} WHERE {type1}_ID = '{st.session_state.user}' 
                 """)
             st.success("Updated successfully")
             con.commit()
-        
+        time.sleep(0.75)
         st.rerun()
             

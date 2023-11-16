@@ -89,3 +89,26 @@ INSERT INTO REVIEW VALUES
 ('R2','P1','USER_3','1','Not fitting through Door'),
 ('R3','P3','USER_2','4','Good Quality Headphones'),
 ('R4','P2','USER_2','1','My ironbox is cooler than this');
+
+
+DELIMITER //
+
+CREATE TRIGGER valid_order
+BEFORE INSERT ON orders
+FOR EACH ROW
+BEGIN
+    DECLARE product_quantity INT;
+
+    -- Get the quantity from the product table for the corresponding product_id
+    SELECT QTY INTO product_quantity
+    FROM product
+    WHERE product_id = NEW.product_id;
+
+    -- Check if the order quantity is greater than the available quantity in the product table
+    IF NEW.qty > product_quantity THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Error: Order quantity exceeds available quantity in product table';
+    END IF;
+END //
+
+DELIMITER ;
