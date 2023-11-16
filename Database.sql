@@ -121,5 +121,3 @@ BEGIN
 END //
 
 DELIMITER ;
-
-CALL UpdatePassseller("dalle2","SELLER_ID");
