@@ -16,12 +16,12 @@ if prod_id == "":
     st.warning("Enter Prod ID")
     st.session_state.dis = True
 
-prod_name = st.text_input('First Name')
+prod_name = st.text_input('Product Name')
 if prod_name == "":
     st.warning("Enter Product Name")
     st.session_state.dis = True
 
-quantity = st.number_input('First Name')
+quantity = st.number_input('Quantity',step=1,min_value=0)
 if not quantity:
     st.warning("Enter Quantity available in Stock")
     st.session_state.dis = True
