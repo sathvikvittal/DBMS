@@ -17,15 +17,26 @@ if 'user' not in st.session_state:
     switch_page("Login")
 else:
     st.session_state.dis = False
+    sql_query=''
+    query = ''
     if 'admin' in st.session_state:
         type1 = "SELLER"
+        cursor.callproc('FetchSellerByID',(f"'{st.session_state.user}'",))
+        for i in cursor.stored_results():
+            row = i.fetchone()
+            query = row
+            break
     else:
         type1 = "USER"
+        sql_query = f"""
+        SELECT * FROM (SELECT * FROM {type1} WHERE {type1}_ID = '{st.session_state.user}') T
+        """
+        cursor.execute(sql_query)
+
+
     st.header(":red[Your Profile]")
-    cursor.execute(f"""
-    SELECT * FROM (SELECT * FROM {type1} WHERE {type1}_ID = '{st.session_state.user}') T
-    """)
-    query = cursor.fetchone()
+    
+    print(query)
     choice = st.selectbox("Pick one", ["Edit Password", "Edit User details"])
     if choice == "Edit User details":
         st.text_input("Your username : ",value=query[0],disabled=True)

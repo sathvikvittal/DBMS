@@ -66,8 +66,12 @@ if 'user' in st.session_state:
             addr = cursor.fetchall()[0][0]
             for i in selection['Product_id'].values:
                 qty = selection[selection['Product_id']==i]['Qty'].values[0]
-                cursor.execute(f'Insert into orders values("{orderid}","{i}","{user}","{addr}","{payment_mode}","{qty}");')
-                con.commit()
+                try:
+                    cursor.execute(f'Insert into orders values("{orderid}","{i}","{user}","{addr}","{payment_mode}","{qty}");')
+                except:
+                    st.error("Error: Qty greater than available")
+                else:
+                    con.commit()
 
 else:
     st.write("Please Login to View Your Shopping Cart")
