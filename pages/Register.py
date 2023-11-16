@@ -79,14 +79,14 @@ if submitted:
             st.error("This email is already registered with another account.")
         else:
             if choice == 'Seller':
-                query = f"""INSERT INTO seller (SELLER_ID,FIRSTNAME,MIDDLENAME,LASTNAME,EMAIL,PASSWORD,SHOP_NAME
+                query = f"""INSERT INTO seller (SELLER_ID,FIRSTNAME,MIDDLENAME,LASTNAME,EMAIL,PASSWD,SHOP_NAME
                 ) VALUES ('{user_name}','{first_name}','{middle_name}','{last_name}','{email}','{password1}','{shop_name}'
                 ); """
                 print(query)
                 cursor.execute(query)
                 con.commit()
             else:
-                query = f"""INSERT INTO User (USERNAME,FIRSTNAME,MIDDLENAME,LASTNAME,PASSWORD,EMAIL,PHONE,ADDRESS)
+                query = f"""INSERT INTO User (USERNAME,FIRSTNAME,MIDDLENAME,LASTNAME,PASSWD,EMAIL,PHONE,ADDRESS)
                 VALUES ('{user_name}','{first_name}','{middle_name}','{last_name}','{password1}','{email}','{phone}','{address}'
                 ); """
                 print(query)

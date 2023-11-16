@@ -46,20 +46,21 @@ if 'user' in st.session_state and 'admin' in st.session_state and st.session_sta
         st.session_state.dis = True
     
     uploaded_file = st.file_uploader(label="Upload Image", type=["jpg"])
-    if uploaded_file is not None:
-        with open(os.path.join("../images/", f"{prod_id}.jpg"), "wb") as f:
-            f.write(uploaded_file.getbuffer())
-        image = Image.open(uploaded_file)
-        st.image(image)
-
+    
         
     submitted = st.button("Register",disabled=st.session_state.dis)
 
     if submitted:
-        cursor.execute(f"SELECT * FROM (SELECT * FROM PRODUCT WHERE PRODUCT_ID = '{prod_id}')")
+        cursor.execute(f"SELECT * FROM (SELECT * FROM PRODUCT WHERE PRODUCT_ID = '{prod_id}') T")
         if cursor.fetchall():
             st.error("This ID already exists, please use a different ID.")
         else:
+            if uploaded_file is not None:
+                with open(os.path.join("./images/", f"{prod_id}.jpg"), "wb") as f:
+                    f.write(uploaded_file.getbuffer())
+                image = Image.open(uploaded_file)
+                st.image(image)
+
             cursor.execute(f"""INSERT INTO PRODUCT(PRODUCT_ID,SELLER_ID,PRODUCT_NAME,QTY,PRICE,DETAILS,CATEGORY)
                         VALUES('{prod_id}','{st.session_state.user}','{prod_name}',{quantity},{price},'{descr}','{category}')
                         ;
