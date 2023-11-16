@@ -4,6 +4,8 @@ import mysql.connector
 import re
 from sqlconfig import connect
 from streamlit_extras.switch_page_button import switch_page
+import os
+from PIL import Image
 
 conn = connect()
 cursor = conn.cursor()
@@ -42,6 +44,14 @@ if 'user' in st.session_state and 'admin' in st.session_state and st.session_sta
     if category == "":
         st.warning("Enter Category")
         st.session_state.dis = True
+    
+    uploaded_file = st.file_uploader(label="Upload Image", type=["jpg"])
+    if uploaded_file is not None:
+        with open(os.path.join("../images/", f"{prod_id}.jpg"), "wb") as f:
+            f.write(uploaded_file.getbuffer())
+        image = Image.open(uploaded_file)
+        st.image(image)
+
         
     submitted = st.button("Register",disabled=st.session_state.dis)
 
