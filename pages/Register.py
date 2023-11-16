@@ -59,6 +59,7 @@ if choice == "User":
     if address == "":
         st.warning("Enter Address")
         st.session_state.dis = True
+    gender = st.selectbox("Gender",["MALE","FEMALE"])
 else:
     shop_name =  st.text_input("Shop Name")
     if shop_name == "":
@@ -86,8 +87,8 @@ if submitted:
                 cursor.execute(query)
                 con.commit()
             else:
-                query = f"""INSERT INTO User (USERNAME,FIRSTNAME,MIDDLENAME,LASTNAME,PASSWD,EMAIL,PHONE,ADDRESS)
-                VALUES ('{user_name}','{first_name}','{middle_name}','{last_name}','{password1}','{email}','{phone}','{address}'
+                query = f"""INSERT INTO User (USERNAME,FIRSTNAME,MIDDLENAME,LASTNAME,GENDER,PASSWD,EMAIL,PHONE,ADDRESS)
+                VALUES ('{user_name}','{first_name}','{middle_name}','{last_name}','{gender}','{password1}','{email}','{phone}','{address}'
                 ); """
                 print(query)
                 cursor.execute(query)

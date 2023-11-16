@@ -33,10 +33,10 @@ else:
         first_name = st.text_input("Your First Name : ",value=query[1])
         middle_name = st.text_input("Your Middle Name : ",value=query[2])
         last_name = st.text_input("Your First Name : ",value=query[3])
-        st.text_input("Your emailId : ",value=query[5],disabled=True)
+        st.text_input("Your emailId : ",value=query[6],disabled=True)
         if type1 == "USER":
-            phone_number = st.number_input("Your Phone Number : ",value=query[6])
-            adr = st.text_input("Your Address : ",value=query[7])
+            phone_number = st.number_input("Your Phone Number : ",value=query[7])
+            adr = st.text_input("Your Address : ",value=query[8])
         else:
             shop_name = st.text_input("Your Shop Name : ",value=query[6])
     
