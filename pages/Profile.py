@@ -12,10 +12,17 @@ con = connect()
 cursor = con.cursor()
 
 if 'user' not in st.session_state:
-    st.write("User not logged in")
+    st.header(":red[User not logged in]")
     time.sleep(5)
     switch_page("Login")
 else:
+    logout = st.button("Logout")
+    if logout:
+        del(st.session_state.user)
+
+        logout = False
+        time.sleep(1)
+        switch_page("Login")
     st.session_state.dis = False
     sql_query=''
     query = ''
@@ -64,6 +71,8 @@ else:
 
     if submitted:
         if choice == 'Edit Password':
+            if type1 == 'SELLER':
+                cursor.callproc("UpdatePassSeller",(f"'{pass2}'",f"'{st.session_state.user}'"))
             cursor.execute(f"""
                 UPDATE {type1} SET PASSWD = '{pass2}' WHERE {type1}_ID = '{st.session_state.user}'
             """)

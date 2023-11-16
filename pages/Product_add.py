@@ -70,7 +70,7 @@ if 'user' in st.session_state and 'admin' in st.session_state and st.session_sta
             st.rerun()
 
 elif 'user' not in st.session_state:
-    st.write("Please login")
+    st.header(":red[User not logged in]")
     time.sleep(3)
     switch_page("Login")
 

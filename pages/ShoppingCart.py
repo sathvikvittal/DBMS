@@ -2,6 +2,8 @@ import streamlit as st
 from sqlconfig import connect
 import pandas as pd
 import uuid
+from time import sleep
+from streamlit_extras.switch_page_button import switch_page
 
 st.session_state.page=1
 if 'conf' not in st.session_state:
@@ -74,4 +76,6 @@ if 'user' in st.session_state:
                     con.commit()
 
 else:
-    st.write("Please Login to View Your Shopping Cart")
+    st.header(":red[Please Login to View Your Shopping Cart]")
+    sleep(0.75)
+    switch_page("Login")

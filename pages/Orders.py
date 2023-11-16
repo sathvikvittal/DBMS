@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 from sqlconfig import connect
 import uuid
+from time import sleep
+from streamlit_extras.switch_page_button import switch_page
 
 if 'user' in st.session_state:
     user = st.session_state.user
@@ -28,5 +30,9 @@ if 'user' in st.session_state:
             st.error("You have already Reviewed this order")
     elif submit and review == "":
         st.error("Comments Cannot be Empty")
+else:
+    st.header(":red[User not logged in]")
+    sleep(1)
+    switch_page("Login")
 
 
