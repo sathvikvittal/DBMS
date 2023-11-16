@@ -85,7 +85,7 @@ def p2():
     df.drop(['rid','pid'],axis=1,inplace=True)
     st.table(df)
 
-    qty = int(st.number_input("Enter Purchase Quantity",step = 1))
+    qty = int(st.number_input("Enter Purchase Quantity",min_value=1,step = 1,max_value=st.session_state.product[3]))
     add = st.button("Add to Cart",type='primary')
     if add and 'user' in st.session_state:
         if(qty <= 0):

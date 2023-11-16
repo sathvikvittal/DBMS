@@ -73,6 +73,7 @@ if 'user' in st.session_state:
                 except:
                     st.error("Error: Qty greater than available")
                 else:
+                    cursor.execute(f'update product set qty = qty-{qty} where product_id="{i}"')
                     con.commit()
 
 else:
