@@ -21,18 +21,15 @@ else:
     query = ''
     if 'admin' in st.session_state:
         type1 = "SELLER"
-        cursor.callproc('FetchSellerByID',(f"'{st.session_state.user}'",))
-        for i in cursor.stored_results():
-            row = i.fetchone()
-            query = row
-            break
+        
     else:
         type1 = "USER"
-        sql_query = f"""
-        SELECT * FROM (SELECT * FROM {type1} WHERE {type1}_ID = '{st.session_state.user}') T
-        """
-        cursor.execute(sql_query)
 
+    sql_query = f"""
+    SELECT * FROM (SELECT * FROM {type1} WHERE {type1}_ID = '{st.session_state.user}') T
+    """
+    cursor.execute(sql_query)
+    query = cursor.fetchone()
 
     st.header(":red[Your Profile]")
     
