@@ -70,11 +70,11 @@ submitted = st.button("Register",disabled=st.session_state.dis)
 if submitted:
     # Add the data to database here
     hi = True
-    cursor.execute(f"SELECT * FROM {choice} WHERE {choice}_ID = {user_name}")
+    cursor.execute(f"SELECT * FROM {choice} WHERE {choice}_ID = '{user_name}'")
     if cursor.fetchall():
         st.error("This ID already exists, please use a different ID.")
     else:
-        cursor.execute(f"SELECT * FROM {choice} WHERE EMAIL = {email}")
+        cursor.execute(f"SELECT * FROM {choice} WHERE EMAIL = '{email}'")
         if cursor.fetchall():
             st.error("This email is already registered with another account.")
         else:
