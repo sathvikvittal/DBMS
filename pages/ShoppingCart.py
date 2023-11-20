@@ -4,6 +4,7 @@ import pandas as pd
 import uuid
 from time import sleep
 from streamlit_extras.switch_page_button import switch_page
+from datetime import date
 
 st.session_state.page=1
 if 'conf' not in st.session_state:
@@ -69,7 +70,7 @@ if 'user' in st.session_state:
             for i in selection['Product_id'].values:
                 qty = selection[selection['Product_id']==i]['Qty'].values[0]
                 try:
-                    cursor.execute(f'Insert into orders values("{orderid}","{i}","{user}","{addr}","{payment_mode}","{qty}");')
+                    cursor.execute(f'Insert into orders values("{orderid}","{i}","{user}","{addr}","{payment_mode}","{qty}","{str(date.today())}");')
                 except:
                     st.error("Error: Qty greater than available")
                 else:
